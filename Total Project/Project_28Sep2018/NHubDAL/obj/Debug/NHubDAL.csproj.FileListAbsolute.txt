@@ -1,0 +1,6 @@
+C:\Users\bharat.naidu\source\repos\Total Project\Project_28Sep2018\NHubDAL\bin\Debug\NHubDAL.dll
+C:\Users\bharat.naidu\source\repos\Total Project\Project_28Sep2018\NHubDAL\bin\Debug\NHubDAL.pdb
+C:\Users\bharat.naidu\source\repos\Total Project\Project_28Sep2018\NHubDAL\obj\Debug\NHubDAL.csprojAssemblyReference.cache
+C:\Users\bharat.naidu\source\repos\Total Project\Project_28Sep2018\NHubDAL\obj\Debug\NHubDAL.csproj.CoreCompileInputs.cache
+C:\Users\bharat.naidu\source\repos\Total Project\Project_28Sep2018\NHubDAL\obj\Debug\NHubDAL.dll
+C:\Users\bharat.naidu\source\repos\Total Project\Project_28Sep2018\NHubDAL\obj\Debug\NHubDAL.pdb

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHub", "NHub\NHub.csproj", "{A9744DA1-2AD6-45FA-A3A9-9BC6D0B3CE66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHubDAL", "NHubDAL\NHubDAL.csproj", "{8E028D40-4338-40DF-BD4E-E774AF8C3884}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9744DA1-2AD6-45FA-A3A9-9BC6D0B3CE66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9744DA1-2AD6-45FA-A3A9-9BC6D0B3CE66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9744DA1-2AD6-45FA-A3A9-9BC6D0B3CE66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9744DA1-2AD6-45FA-A3A9-9BC6D0B3CE66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E028D40-4338-40DF-BD4E-E774AF8C3884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E028D40-4338-40DF-BD4E-E774AF8C3884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E028D40-4338-40DF-BD4E-E774AF8C3884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E028D40-4338-40DF-BD4E-E774AF8C3884}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3722BBAE-70C8-47E6-B74C-89FDC1D637C1}
+	EndGlobalSection
+EndGlobal
