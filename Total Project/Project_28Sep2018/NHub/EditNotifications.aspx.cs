@@ -25,23 +25,22 @@ namespace NHub
                     SourceName.Items.Add(new ListItem(cs.SName, cs.Sid.ToString()));
                 }
                 foreach (ClassEvents c in Edetails)
+                {
                     TextBox1.Text = c.Ename;
+                }
                 int[] channels = obj.GetChannelsAndEventData(id);
 
-                try
-                {
-                    if (1 == channels[0])
-                        CheckBoxIntranet.Checked = true;
-                    if (2 == channels[1])
-                        CheckBoxEmails.Checked = true;
-                    if (3 == channels[2])
-                        CheckboxUnabot.Checked = true;
-                    if (4 == channels[3])
-                       CheckboxSMS.Checked = true;
-                }
-                catch (Exception)
-                {
 
+                for (int i = 0; i < channels.Length; i++)
+                {
+                    switch (channels[i])
+                    {
+
+                        case 1: CheckBoxIntranet.Checked = true; break;
+                        case 2: CheckBoxEmails.Checked = true; break;
+                        case 3: CheckboxUnabot.Checked = true; break;
+                        case 4: CheckboxSMS.Checked = true; break;
+                    }
                 }
             }
         }

@@ -225,6 +225,9 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="SLM Notifications\SLMNotifications.aspx" />
+    <Content Include="SLMEditNotifications.aspx" />
+    <Content Include="SLMNotifications.aspx" />
+    <Content Include="SLMSubscribeNotifications.aspx" />
     <Content Include="Sources.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -429,6 +432,27 @@
     </Compile>
     <Compile Include="SLM Notifications\SLMNotifications.aspx.designer.cs">
       <DependentUpon>SLMNotifications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SLMEditNotifications.aspx.cs">
+      <DependentUpon>SLMEditNotifications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SLMEditNotifications.aspx.designer.cs">
+      <DependentUpon>SLMEditNotifications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SLMNotifications.aspx.cs">
+      <DependentUpon>SLMNotifications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SLMNotifications.aspx.designer.cs">
+      <DependentUpon>SLMNotifications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SLMSubscribeNotifications.aspx.cs">
+      <DependentUpon>SLMSubscribeNotifications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SLMSubscribeNotifications.aspx.designer.cs">
+      <DependentUpon>SLMSubscribeNotifications.aspx</DependentUpon>
     </Compile>
     <Compile Include="Sources.aspx.cs">
       <DependentUpon>Sources.aspx</DependentUpon>

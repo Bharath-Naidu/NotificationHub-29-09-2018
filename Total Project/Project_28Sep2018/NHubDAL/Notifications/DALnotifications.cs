@@ -25,6 +25,11 @@ namespace NHubDAL.Notifications
         public String CName { get; set; }
     }
 
+    public class Users
+    {
+        public String Username { get; set; }
+        public String UserId { get; set; }
+    }
 
 
     public class DALnotifications
@@ -189,8 +194,10 @@ namespace NHubDAL.Notifications
                 {
                     while (myDataReader.Read())
                     {
-                        Chaid[c++] = Convert.ToInt32(myDataReader["ChannelId"]);
-                        
+                        int value = Convert.ToInt32(myDataReader["ChannelId"]);
+                        Chaid[c] = value;
+                        c++;
+                        //Console.WriteLine(Chaid[c]);
                     }
                 }
 
@@ -255,6 +262,33 @@ namespace NHubDAL.Notifications
                 cmd.Parameters.AddWithValue("@Cid", Cid);
                 cmd.ExecuteNonQuery();
             }
+        }
+        //------------------------------------get user name----------------------------------------
+        public List<Users> GetUsers()
+        {
+            List<Users> ListOfUsers = new List<Users>();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                string sql = "Select UserName,Id from AspNetUsers";
+                SqlCommand myCommand = new SqlCommand(sql, connection);
+                using (SqlDataReader myDataReader = myCommand.ExecuteReader())
+                {
+                    while (myDataReader.Read())
+                    {
+                        ListOfUsers.Add(new Users
+                        {
+                            UserId = myDataReader["id"].ToString(),
+                            Username = myDataReader["UserName"].ToString(),
+
+                    });
+                    }
+                }
+
+            }
+
+            return ListOfUsers;
         }
     }
 }
