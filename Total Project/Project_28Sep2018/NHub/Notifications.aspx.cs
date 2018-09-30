@@ -12,6 +12,7 @@ namespace NHub
         //int id;
         LinkButton[] LB;
         PlaceHolder[] PH;
+        
         int NoOfSources;
         DALnotifications  Obj= new DALnotifications();
         protected void Page_Load(object sender, EventArgs e)
@@ -24,13 +25,16 @@ namespace NHub
 
            LB = new LinkButton[NoOfSources];
            PH = new PlaceHolder[NoOfSources];
+           
             if (!IsPostBack)
             {
                 for (int count = 0; count < NoOfSources; count++)
                 {
                     LB[count] = new LinkButton();
                     PH[count] = new PlaceHolder();
+                    
                     LB[count].Text = ListOfSources[count].SName;
+                    
 
                     LB[count].ID = ListOfSources[count].Sid.ToString();
                     PH[count].ID = ListOfSources[count].Sid.ToString();
@@ -42,8 +46,20 @@ namespace NHub
                         PH[count].Controls.Add(new LiteralControl("<br/>"));
                         PH[count].Controls.Add(new LiteralControl("&nbsp;&nbsp;&nbsp"));
                         Label L = new Label();
-                        L.Text = Event.Ename; 
+                        HyperLink EditLink = new HyperLink();
+                        HyperLink DeleteLink = new HyperLink();
+                        L.Text = Event.Ename;
+                        DeleteLink.Text = "Delete";
+                        EditLink.Text = "Edit";
+                        EditLink.ID = Event.Eid.ToString();
+                        DeleteLink.ID= Event.Eid.ToString();
+                        EditLink.NavigateUrl = "~/EditNotifications.aspx?id="+Event.Eid;
+                        DeleteLink.NavigateUrl = "~/DeleteNotifications.aspx?id=" + Event.Eid;
                         PH[count].Controls.Add(L);
+                        PH[count].Controls.Add(new LiteralControl("&nbsp;&nbsp;&nbsp"));
+                        PH[count].Controls.Add(EditLink);
+                        PH[count].Controls.Add(new LiteralControl("&nbsp;"));
+                        PH[count].Controls.Add(DeleteLink);
                     }
                     //LB[count].Command += LinkButtonClick;
                     NotificationsBody.Controls.Add(LB[count]);

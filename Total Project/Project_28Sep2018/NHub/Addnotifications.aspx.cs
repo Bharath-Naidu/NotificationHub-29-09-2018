@@ -17,7 +17,7 @@ namespace NHub
         {
             
             List<ClassSources> Listofsourcse = new List<ClassSources>();
-            //List<ClassChannels> ListofChannels = new List<ClassChannels>();
+            
             Listofsourcse = obj.GetSourceData();
             ListofChannels = obj.GetChannelsData();
             foreach (ClassSources S in Listofsourcse)
@@ -47,6 +47,12 @@ namespace NHub
                 obj.AddChannels(Eid, ListofChannels[2].Cid);
             if (CheckboxSMS.Checked == true)
                 obj.AddChannels(Eid, ListofChannels[3].Cid);
+            HyperLink EditLink = new HyperLink();
+            HyperLink DeleteLink = new HyperLink();
+            EditLink.Text = "Edit";
+            DeleteLink.Text = "Delete";
+            EditLink.NavigateUrl = "EditNotifications";
+
             Response.Redirect("Notifications");
         }
     }

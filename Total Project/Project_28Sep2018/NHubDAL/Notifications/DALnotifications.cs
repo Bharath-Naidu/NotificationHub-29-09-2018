@@ -32,7 +32,7 @@ namespace NHubDAL.Notifications
 
         public List<ClassSources> GetSourceData()
         {
-             List<ClassSources> SN = new List<ClassSources>();
+            List<ClassSources> SN = new List<ClassSources>();
             using (SqlConnection connection = new SqlConnection())
             {
                 connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
@@ -50,7 +50,7 @@ namespace NHubDAL.Notifications
                         {
                             Sid = Convert.ToInt32(myDataReader["Id"].ToString()),
                             SName = myDataReader["Name"].ToString(),
-                            
+
                         });
                     }
                 }
@@ -58,7 +58,7 @@ namespace NHubDAL.Notifications
             }
         }
 
-//----------------------------------Event data send here -----------------------------------------
+        //----------------------------------Event data send here -----------------------------------------
         public List<ClassEvents> GetEventsData(int sid)
         {
             List<ClassEvents> EL = new List<ClassEvents>();
@@ -67,7 +67,7 @@ namespace NHubDAL.Notifications
                 connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
                 connection.Open();
 
-                string sql = "Select * from Event where SourceId="+sid;
+                string sql = "Select * from Event where SourceId=" + sid;
 
                 SqlCommand myCommand = new SqlCommand(sql, connection);
 
@@ -87,7 +87,7 @@ namespace NHubDAL.Notifications
                 return EL;
             }
         }
- //-------------------------------channels data will be sends here ---------------------------------------------
+        //-------------------------------channels data will be sends here ---------------------------------------------
         public List<ClassChannels> GetChannelsData()
         {
             List<ClassChannels> EL = new List<ClassChannels>();
@@ -115,8 +115,8 @@ namespace NHubDAL.Notifications
             }
         }
 
- //------------------------------------------Adding New Event-------------------------------------------
-        public int AddEvent(String name,int Sourceid,bool Mandatry)
+        //------------------------------------------Adding New Event-------------------------------------------
+        public int AddEvent(String name, int Sourceid, bool Mandatry)
         {
             int Eid;
             using (SqlConnection connection = new SqlConnection())
@@ -134,7 +134,7 @@ namespace NHubDAL.Notifications
             return Eid;
         }
         //-------------------------------------- Adding channels to events----------------------------
-        public void AddChannels(int Eid,int Cid)
+        public void AddChannels(int Eid, int Cid)
         {
             using (SqlConnection connection = new SqlConnection())
             {
@@ -145,12 +145,119 @@ namespace NHubDAL.Notifications
                 cmd.Parameters.AddWithValue("@Eid", Eid);
                 cmd.Parameters.AddWithValue("@Cid", Cid);
                 cmd.ExecuteNonQuery();
+            }
+        }
+        //---------------------------------------reading event data based on eid--------------------------
+        public List<ClassEvents> GetOneEventdata(int Eid)
+        {
+            List<ClassEvents> CE = new List<ClassEvents>();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                string sql = "Select Name,SourceId from Event where id=" + Eid;
+                SqlCommand myCommand = new SqlCommand(sql, connection);
+                using (SqlDataReader myDataReader = myCommand.ExecuteReader())
+                {
+                    while (myDataReader.Read())
+                    {
+                        CE.Add(new ClassEvents
+                        {
+                            //Eid=
+                            Ename = myDataReader["Name"].ToString(),
+                            Sid = Convert.ToInt32(myDataReader["SourceId"].ToString()),
 
+                        });
+                    }
+                }
+                return CE;
+            }
+        }
 
+        //----------------------------------------get Selected channels data---------------------
+        public int[] GetChannelsAndEventData(int Eventid)
+        {
+            int[] Chaid = new int[10];
+                int c=0;
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                string sql = "Select ChannelId from EventChannel where EventId=" + Eventid;
+                SqlCommand myCommand = new SqlCommand(sql, connection);
+                using (SqlDataReader myDataReader = myCommand.ExecuteReader())
+                {
+                    while (myDataReader.Read())
+                    {
+                        Chaid[c++] = Convert.ToInt32(myDataReader["ChannelId"]);
+                        
+                    }
+                }
+
+            }
+            
+            return Chaid;
+        }
+        //--------------------------------------------Delete an Event ----------------------------------
+        public void DeleteEvent(int Eventid)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("deleteEvent", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Eid", Eventid);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        //--------------------------------------------Update an Event ----------------------------------
+        public void UpdateEvent(int Eventid,String name,int Sid,bool b)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+               
+                SqlCommand cmd = new SqlCommand("UpdateEvent", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", Eventid);
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@souid", Sid);
+                cmd.Parameters.AddWithValue("@man", b);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        //-------------------------------------Update Channels---------------------------------
+        public void DeleteChannels(int Eventid)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("deleteChannels", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", Eventid);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void UpdateChannels(int Eventid,int Cid)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateChannels", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", Eventid);
+                cmd.Parameters.AddWithValue("@Cid", Cid);
+                cmd.ExecuteNonQuery();
             }
         }
     }
-
 }
+
 
 

@@ -180,6 +180,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="DeleteNotifications.aspx" />
+    <Content Include="EditNotifications.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -388,6 +389,13 @@
     </Compile>
     <Compile Include="DeleteNotifications.aspx.designer.cs">
       <DependentUpon>DeleteNotifications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditNotifications.aspx.cs">
+      <DependentUpon>EditNotifications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditNotifications.aspx.designer.cs">
+      <DependentUpon>EditNotifications.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
