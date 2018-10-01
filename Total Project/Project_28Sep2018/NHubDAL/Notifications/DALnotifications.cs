@@ -13,6 +13,17 @@ namespace NHubDAL.Notifications
         public int Sid { get; set; }
         public String SName { get; set; }
     }
+    public class Services
+    {
+        public int Serid { get; set; }
+        public String SerName { get; set; }
+    }
+    public class ServiceLineManagers
+    {
+        public int SLMid { get; set; }
+        public int SLid { get; set; }
+        public String Uid { get; set; }
+    }
     public class ClassEvents
     {
         public int Eid { get; set; }
@@ -290,6 +301,117 @@ namespace NHubDAL.Notifications
 
             return ListOfUsers;
         }
+        //---------------------------------------List service Line manager -----------------------------------
+        public List<ServiceLineManagers> getServiceLineManagers(String id)
+        {
+            List<ServiceLineManagers> EL = new List<ServiceLineManagers>();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                string sql = "Select * from ServiceLineManager";
+                SqlCommand myCommand = new SqlCommand(sql, connection);
+                using (SqlDataReader myDataReader = myCommand.ExecuteReader())
+                {
+                    while (myDataReader.Read())
+                    {
+                        EL.Add(new ServiceLineManagers
+                        {
+                            SLMid = Convert.ToInt32(myDataReader["Id"].ToString()),
+                            SLid = Convert.ToInt32(myDataReader["ServiceLineId"].ToString()),
+                            Uid = myDataReader["UserId"].ToString(),
+                        });
+                    }
+                }
+            }
+            return EL;
+        }
+       // ---------------------------------------Event subscribe -----------------------------------
+        public int SubscribeEvent(int Eventid,int SLId,int SLMId,bool Confidential,bool Mandatory)
+        {
+            int LastModifiredid;
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SubscribeEvent", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter pr = new SqlParameter();
+                cmd.Parameters.AddWithValue("@Eid", Eventid);
+                cmd.Parameters.AddWithValue("@Sid", SLId);
+                cmd.Parameters.AddWithValue("@SMid", SLMId);
+                cmd.Parameters.AddWithValue("@con", Confidential);
+                cmd.Parameters.AddWithValue("@man", Mandatory);
+                
+                pr.Direction = ParameterDirection.Output;
+                pr.SqlDbType = SqlDbType.Int;
+                pr.Value = 0;
+                pr.ParameterName = "@id";
+                cmd.Parameters.Add(pr);
+                object obj=cmd.ExecuteNonQuery();
+
+                LastModifiredid = Convert.ToInt32(cmd.Parameters["@id"].Value.ToString());
+            }
+            return LastModifiredid;
+        }
+        // ---------------------------------------get sources -----------------------------------
+        public List<Services> getServices()
+        {
+            List<Services> EL = new List<Services>();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                string sql = "Select * from ServiceLine";
+                SqlCommand myCommand = new SqlCommand(sql, connection);
+                using (SqlDataReader myDataReader = myCommand.ExecuteReader())
+                {
+                    while (myDataReader.Read())
+                    {
+                        EL.Add(new Services
+                        {
+                            Serid= Convert.ToInt32(myDataReader["Id"].ToString()),
+                            SerName = myDataReader["Name"].ToString()
+                        });
+                    }
+                }
+            }
+            return EL;
+        }
+        //--------------------------------Insert in Event_slm_subscribe_channel-------------------------
+        public void SubscribeChannels(int EventSubscribeID,int ChannelID)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("SubscribeChannel", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ESSid", EventSubscribeID);
+                cmd.Parameters.AddWithValue("@Cid", ChannelID);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        //---------------------------------------insert in Event_slm_subscribe_users------------------------------
+        public void SubscribeUsers(String Uname,int id)
+        {
+            
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                
+
+                SqlCommand cmd = new SqlCommand("SubscribeUser", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Unam", Uname);
+                cmd.Parameters.AddWithValue("@ESSid", id);
+                cmd.ExecuteNonQuery();
+            }
+           
+        }
+
     }
 }
 

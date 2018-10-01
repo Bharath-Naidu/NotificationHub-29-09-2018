@@ -53,31 +53,16 @@
             <td class="modal-sm" style="width: 156px; height: 36px;">End Users</td>
             <td style="height: 36px">
                 
-   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-    <script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('[id*=lstFruits]').multiselect({
-                includeSelectAllOption: true
-            });
-            $("#Button1").click(function () {
-                alert($(".multiselect-selected-text").html());
-            });
-        });
-    </script>
-
-            <asp:ListBox ID="lstFruits" runat="server" SelectionMode="Multiple">
-                <asp:ListItem Text="Mango" Value="1" />
-                <asp:ListItem Text="Apple" Value="2" />
-                <asp:ListItem Text="Banana" Value="3" />
-                <asp:ListItem Text="Guava" Value="4" />
-                <asp:ListItem Text="Orange" Value="5" />
-            </asp:ListBox>
-
-            <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
+                
+                
+                
+                <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Button ID="Add" runat="server" OnClick="Button1_Click" style="margin-left: 15" Text="Select" Width="109px" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:ListBox ID="ListBox2" runat="server"></asp:ListBox>
+                
+                
                 
                 
             </td>

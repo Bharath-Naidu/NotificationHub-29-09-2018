@@ -65,7 +65,10 @@
                             { %>
                                 <li><a runat="server" href="~/Templates">Templates</a></li>
                         <%} %>
-                        <li><a runat="server" href="~/">Notifications</a></li>
+                        <%if (Context.User.IsInRole("ServiceLine Manager"))
+                            {%>
+                        <li><a runat="server" href="~/SLMNotifications">Notifications</a></li><%}else if(Context.User.IsInRole("Super Admin")){ %>
+                        <li><a runat="server" href="~/Notifications">Notifications</a></li><%}%>
                         <li><a runat="server" href="~/">Dashboards</a></li>
                             <%if (Context.User.IsInRole("Super Admin"))
                                 { %>
