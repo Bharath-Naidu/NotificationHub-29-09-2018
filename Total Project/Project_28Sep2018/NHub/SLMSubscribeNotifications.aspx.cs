@@ -15,7 +15,7 @@ namespace NHub
         DALnotifications obj = new DALnotifications();
         List<Services> Souid=new List<Services>();
         List<ClassEvents> Edetails=new List<ClassEvents>();
-        
+        int[] channels;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -32,30 +32,30 @@ namespace NHub
                 foreach (ClassEvents c in Edetails)
                     TextBox1.Text = c.Ename;
                 TextBox1.Enabled = false;
-                int[] channels = obj.GetChannelsAndEventData(id);
-
+                channels = obj.GetChannelsAndEventData(id);
                 for (int i = 0; i < channels.Length; i++)
                 {
-                    int flag = 0;
                     switch (channels[i])
                     {
-
-                        case 1: CheckBoxIntranet.Checked = true; flag = 1; break;
-                        case 2: CheckBoxEmails.Checked = true; flag = 1; break;
-                        case 3: CheckboxUnabot.Checked = true; flag = 1; break;
-                        case 4: CheckboxSMS.Checked = true; flag = 1; break;
-
+                        case 1: CheckBoxIntranet.Checked = true;  break;
+                        case 2: CheckBoxEmails.Checked = true;  break;
+                        case 3: CheckboxUnabot.Checked = true;  break;
+                        case 4: CheckboxSMS.Checked = true;  break;
                     }
-                    //if(i+1!=channels[i])
-                    //    switch (channels[i])
-                    //    {
+                }
 
-                    //        case 1: CheckBoxIntranet.Enabled = false; break;
-                    //        case 2: CheckBoxEmails.Enabled = false;  break;
-                    //        case 3: CheckboxUnabot.Enabled = false;  break;
-                    //        case 4: CheckboxSMS.Enabled = false;  break;
-
-                    //    }
+                for (int i = 1; i <=4; i++)
+                {
+                    if (Find(i))
+                    {
+                        switch (i)
+                        {
+                            case 1: CheckBoxIntranet.Enabled=false; break;
+                            case 2: CheckBoxEmails.Enabled = false; break;
+                            case 3: CheckboxUnabot.Enabled = false; break;
+                            case 4: CheckboxSMS.Enabled = false; break;
+                        }
+                    }
                 }
 
                 // ListOfUsers = new List<Users>();
@@ -73,7 +73,15 @@ namespace NHub
                
         }
     
-
+        bool Find(int value)
+        {
+            for(int i=0;i<channels.Length;i++)
+            {
+                if (channels[i] == value)
+                    return false ;
+            }
+            return true;
+        }
         protected void ButtonADDEvent_Click(object sender, EventArgs e)
         {
             String currentUser=Context.User.Identity.Name;
@@ -81,6 +89,11 @@ namespace NHub
             int SLMid=0;
             List<Users> ListOfUsers = new List<Users>();
             ListOfUsers = obj.GetUsers();
+            bool Confidencal=false, Manadantry=false;
+            if (CYes.Checked==true && CNo.Checked==false)
+                Confidencal = true;
+            if (MYes.Checked == true && MNo.Checked == false)
+                Manadantry = true;
             foreach (Users OneUser in ListOfUsers)
             {
                 if (OneUser.Username == currentUser)
@@ -92,7 +105,7 @@ namespace NHub
                 if(manager.Uid==Userid)
                 SLMid = manager.SLMid;    
             }
-            int ESS=obj.SubscribeEvent(id, Convert.ToInt32(SourceName.SelectedItem.Value), SLMid,false,false);
+            int ESS=obj.SubscribeEvent(id, Convert.ToInt32(SourceName.SelectedItem.Value), SLMid, Confidencal, Manadantry);
             List<ClassChannels> ListofChannels = obj.GetChannelsData();
             if (CheckBoxIntranet.Checked == true)
                 obj.SubscribeChannels(ESS, ListofChannels[0].Cid);

@@ -38,7 +38,10 @@ namespace NHub
         protected void ButtonADDEvent_Click(object sender, EventArgs e)
         {
             ListofChannels = obj.GetChannelsData();
-            int Eid = obj.AddEvent(TextBox1.Text, Convert.ToInt32(SourceName.SelectedItem.Value), false);
+            bool Manadantry = false;
+            if (MYes.Checked == true && MNo.Checked == false)
+                Manadantry = true;
+            int Eid = obj.AddEvent(TextBox1.Text, Convert.ToInt32(SourceName.SelectedItem.Value), Manadantry);
             if (CheckBoxIntranet.Checked == true)
                 obj.AddChannels(Eid, ListofChannels[0].Cid);
             if (CheckBoxEmails.Checked == true)

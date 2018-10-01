@@ -1,11 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SLMSubscribeNotifications.aspx.cs" Inherits="NHub.SLMSubscribeNotifications" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-     <body>
-         
-
-
    
-
+    
+    <body>
    <p>
         <br />
     </p>
@@ -31,11 +28,29 @@
         </tr>
         <tr>
             <td class="modal-sm" style="height: 39px; width: 156px">Confidential Event</td>
-            <td style="height: 39px"></td>
+            <td style="height: 39px">
+
+             
+
+
+
+                <asp:RadioButton ID="CYes" runat="server" GroupName="Confidential" Text="Yes" />
+&nbsp;&nbsp;&nbsp;
+                <asp:RadioButton ID="CNo" runat="server" GroupName="Confidential" Checked="True" Text="No"/>
+
+             
+
+
+
+            </td>
         </tr>
         <tr>
             <td class="modal-sm" style="width: 156px; height: 32px;">Mandatory Event</td>
-            <td style="height: 32px"></td>
+            <td style="height: 32px">
+                <asp:RadioButton ID="MYes" runat="server" GroupName="Manadatroy" Text="Yes" />
+&nbsp;&nbsp;&nbsp;
+                <asp:RadioButton ID="MNo" runat="server" Checked="True" GroupName="Manadatroy" Text="No" />
+            </td>
         </tr>
         <tr>
             <td class="modal-sm" style="width: 156px; height: 16px;"></td>
