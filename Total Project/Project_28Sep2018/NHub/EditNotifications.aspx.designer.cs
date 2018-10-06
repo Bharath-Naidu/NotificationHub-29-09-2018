@@ -67,6 +67,42 @@ namespace NHub {
         protected global::System.Web.UI.WebControls.CheckBox CheckboxSMS;
         
         /// <summary>
+        /// CYes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton CYes;
+        
+        /// <summary>
+        /// CNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton CNo;
+        
+        /// <summary>
+        /// MYes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton MYes;
+        
+        /// <summary>
+        /// MNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton MNo;
+        
+        /// <summary>
         /// TextBox2 control.
         /// </summary>
         /// <remarks>

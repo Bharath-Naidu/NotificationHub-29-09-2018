@@ -20,13 +20,21 @@ namespace NHub
             {
                 List<ClassSources> Souid = obj.GetSourceData();
                 List<ClassEvents> Edetails = obj.GetOneEventdata(id);
+
+                int SourceId=0;
+                foreach (ClassEvents OneEvent in Edetails)
+                {
+                    SourceId = OneEvent.Sid;
+                    TextBox1.Text = OneEvent.Ename;
+                }
                 foreach (ClassSources cs in Souid)
                 {
+                    
                     SourceName.Items.Add(new ListItem(cs.SName, cs.Sid.ToString()));
-                }
-                foreach (ClassEvents c in Edetails)
-                {
-                    TextBox1.Text = c.Ename;
+                    if (SourceId == cs.Sid)
+                    {
+                        SourceName.Items.FindByText(cs.SName).Selected = true;
+                    }
                 }
                 int[] channels = obj.GetChannelsAndEventData(id);
 
@@ -47,6 +55,10 @@ namespace NHub
 
         protected void ButtonADDEvent_Click(object sender, EventArgs e)
         {
+            bool Manadantry = false;
+            
+            if (MYes.Checked == true && MNo.Checked == false)
+                Manadantry = true;
             obj.DeleteChannels(id);
             List<ClassChannels> ListofChannels = obj.GetChannelsData();
             if (CheckBoxIntranet.Checked == true)
@@ -57,9 +69,14 @@ namespace NHub
                 obj.UpdateChannels(id, ListofChannels[2].Cid);
             if (CheckboxSMS.Checked == true)
                 obj.UpdateChannels(id, ListofChannels[3].Cid);
-            obj.UpdateEvent(id,TextBox1.Text, Convert.ToInt32(SourceName.SelectedItem.Value), false);
-            
-
+            obj.UpdateEvent(id,TextBox1.Text, Convert.ToInt32(SourceName.SelectedItem.Value), Manadantry);
+            DataType DT = new DataType();
+            DT.id = Convert.ToInt32(DropDownList1.SelectedValue);
+            DT.Name = DropDownList1.SelectedItem.ToString();
+            obj.UpdateDataTypes(DT);
+            DT.id = Convert.ToInt32(DropDownList2.SelectedValue);
+            DT.Name = DropDownList2.SelectedItem.ToString();
+            obj.UpdateDataTypes(DT);
             Response.Redirect("Notifications");
         }
 

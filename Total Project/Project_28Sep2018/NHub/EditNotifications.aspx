@@ -33,12 +33,30 @@
             </td>
         </tr>
         <tr>
-            <td class="modal-sm" style="height: 20px; width: 156px">Confidential Event</td>
-            <td style="height: 20px"></td>
+            <td class="modal-sm" style="height: 32px; width: 156px">Confidential Event</td>
+            <td style="height: 32px">
+
+             
+
+
+
+                <asp:RadioButton ID="CYes" runat="server" GroupName="Confidential" Text="Yes" />
+&nbsp;&nbsp;&nbsp;
+                <asp:RadioButton ID="CNo" runat="server" GroupName="Confidential" Checked="True" Text="No"/>
+
+             
+
+
+
+            </td>
         </tr>
         <tr>
             <td class="modal-sm" style="width: 156px">Mandatory Event</td>
-            <td>&nbsp;</td>
+            <td>
+                <asp:RadioButton ID="MYes" runat="server" GroupName="Manadatroy" Text="Yes" />
+&nbsp;&nbsp;&nbsp;
+                <asp:RadioButton ID="MNo" runat="server" Checked="True" GroupName="Manadatroy" Text="No" />
+            </td>
         </tr>
         <tr>
             <td class="modal-sm" style="width: 156px">&nbsp;</td>
@@ -52,22 +70,26 @@
         <tr>
             <td colspan="2">Dynamic Fields:<br />
                 <br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source Field&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source Field&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unique Alias<br />
 &nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:TextBox ID="TextBox2" runat="server" Height="50px" Width="138px"></asp:TextBox>
+                <asp:TextBox ID="TextBox2" runat="server" Height="25px" Width="138px" Font-Size="Large">SC_User Name</asp:TextBox>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:DropDownList ID="DropDownList1" runat="server" Height="50px" Width="138px">
+                <asp:DropDownList ID="DropDownList1" runat="server" Height="25px" Width="138px">
+                    <asp:ListItem Value="1">Text</asp:ListItem>
+                    <asp:ListItem Enabled="False" Value="2">Type</asp:ListItem>
                 </asp:DropDownList>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:TextBox ID="TextBox3" runat="server" Height="50px" Width="138px"></asp:TextBox>
+                <asp:TextBox ID="TextBox3" runat="server" Height="25px" Width="138px" Font-Size="Large">BD_Name</asp:TextBox>
                 <br />
                 <br />
-                2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBox4" runat="server" Height="50px" Width="138px"></asp:TextBox>
+                2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBox4" runat="server" Height="25px" Width="138px" Font-Size="Large">SC_Birth date</asp:TextBox>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:DropDownList ID="DropDownList2" runat="server" Height="50px" Width="138px">
+                <asp:DropDownList ID="DropDownList2" runat="server" Height="25px" Width="138px">
+                    <asp:ListItem Value="1">Text</asp:ListItem>
+                    <asp:ListItem Value="2">Type</asp:ListItem>
                 </asp:DropDownList>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:TextBox ID="TextBox5" runat="server" Height="50px" Width="138px"></asp:TextBox>
+                <asp:TextBox ID="TextBox5" runat="server" Height="25px" Width="138px" Font-Size="Large">BD_Day</asp:TextBox>
                 <br />
             </td>
         </tr>

@@ -8,6 +8,19 @@ using System.Threading.Tasks;
 
 namespace NHubDAL.Notifications
 {
+    public class SubscribeDetails
+    {
+        public int id { get; set; }
+        public int Eventid { get; set; }
+        public int ServiceLineid { get; set; }
+        public int ServiceLineManagerid { get; set; }
+
+    }
+    public class DataType
+    {
+        public int id { get; set; }
+        public String Name { get; set; }
+    }
     public class ClassSources
     {
         public int Sid { get; set; }
@@ -41,6 +54,11 @@ namespace NHubDAL.Notifications
         public String Username { get; set; }
         public String UserId { get; set; }
     }
+    public class SubscribedUsers
+    {
+        public int Id { get; set; }
+        public String UserId { get; set; }
+    }
 
 
     public class DALnotifications
@@ -51,6 +69,7 @@ namespace NHubDAL.Notifications
             List<ClassSources> SN = new List<ClassSources>();
             using (SqlConnection connection = new SqlConnection())
             {
+        
                 connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
                 connection.Open();
 
@@ -179,10 +198,8 @@ namespace NHubDAL.Notifications
                     {
                         CE.Add(new ClassEvents
                         {
-                            //Eid=
                             Ename = myDataReader["Name"].ToString(),
                             Sid = Convert.ToInt32(myDataReader["SourceId"].ToString()),
-
                         });
                     }
                 }
@@ -354,6 +371,25 @@ namespace NHubDAL.Notifications
             }
             return LastModifiredid;
         }
+        //----------------------------------------Update the subscribed Event-----------------------------------
+        public void UpdateSubscribedList(int id,int Eventid, int SLId, int SLMId, bool Confidential, bool Mandatory)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SubscribeEvent", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter pr = new SqlParameter();
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@Eid", Eventid);
+                cmd.Parameters.AddWithValue("@Sid", SLId);
+                cmd.Parameters.AddWithValue("@SMid", SLMId);
+                cmd.Parameters.AddWithValue("@con", Confidential);
+                cmd.Parameters.AddWithValue("@man", Mandatory);
+                cmd.ExecuteNonQuery();
+            }   
+        }
         // ---------------------------------------get sources -----------------------------------
         public List<Services> getServices()
         {
@@ -410,6 +446,110 @@ namespace NHubDAL.Notifications
                 cmd.ExecuteNonQuery();
             }
            
+        }
+        //---------------------------------------insert in Event_slm_subscribe_users------------------------------
+        public void UpdateDataTypes(DataType DT)
+        {
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("UpdateDatatypes", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                
+                cmd.Parameters.AddWithValue("@id", DT.id);
+                cmd.Parameters.AddWithValue("@Name", DT.Name);
+                cmd.ExecuteNonQuery();
+            }
+
+        }
+        //-------------------------------------get channels from Event Subscribe data------------------------------
+        public int[] GetChannelsFromSubscribedList(int EventSLMid)
+        {
+            int[] Chaid = new int[10];
+            int c = 0;
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                string sql = "Select ChannelId from Event_slm_subscribe_channel where Event_slm_subscribe_Id=" + EventSLMid;
+                SqlCommand myCommand = new SqlCommand(sql, connection);
+                using (SqlDataReader myDataReader = myCommand.ExecuteReader())
+                {
+                    while (myDataReader.Read())
+                    {
+                        int value = Convert.ToInt32(myDataReader["ChannelId"]);
+                        Chaid[c] = value;
+                        c++;
+                        //Console.WriteLine(Chaid[c]);
+                    }
+                }
+
+            }
+
+            return Chaid;
+        }
+        //-------------------------------------Get Subscriberd data------------------------------------
+        public SubscribeDetails GetSubscribedData(int id)
+        {
+            SubscribeDetails details = new SubscribeDetails();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("GetSubscribedData", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id",id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    details.id =Convert.ToInt32( reader["Id"].ToString());
+                    details.Eventid= Convert.ToInt32(reader["EventId"].ToString());
+                    details.ServiceLineid = Convert.ToInt32(reader["ServiceLineId"].ToString());
+                    details.ServiceLineManagerid = Convert.ToInt32(reader["ServiceLineManagerId"].ToString());
+                }
+            }
+            return details;
+        }
+        //----------------------------------Get subscribed End Users------------------------------------
+        public List<SubscribedUsers> GetSubscribedUsersList(int id)
+        {
+            List<SubscribedUsers> Users = new List<SubscribedUsers>();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("GetSubscribedUsers", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                    while (reader.Read())
+                {
+                        Users.Add(new SubscribedUsers
+                        {
+                            Id = Convert.ToInt32(reader["Event_slm_subscribe_Id"].ToString()),
+                            UserId = reader["UserId"].ToString()
+                    });
+                }
+            }
+            return Users;
+        }
+        public void UpdatesEvents(int id)
+        {
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = @"Data Source=ACUPC-111;Initial Catalog=NotificationHub;Integrated Security=True";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("UpdateSubscribed", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.ExecuteNonQuery();
+            }
+
         }
 
     }
